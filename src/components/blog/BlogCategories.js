@@ -7,7 +7,7 @@ function BlogCategories ({get_categories, categories}){
 
     useEffect(()=>{
         get_categories()
-    },[])
+    },[get_categories])
 
     return(
         <div>

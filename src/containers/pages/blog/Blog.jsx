@@ -14,7 +14,7 @@ function Blog({
 
     useEffect(()=>{
         get_blog_list()
-    },[])
+    },[get_blog_list])
 
     return(
         <FullWidthLayout>

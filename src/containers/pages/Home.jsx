@@ -1,8 +1,19 @@
 import FullWidthLayout from "hocs/layouts/FullWidthLayout";
 import { connect } from "react-redux";
 import { Link } from 'react-router-dom';
+import { useEffect } from "react";
+import LoadingCard from "components/loaders/LoadingCard";
+import { get_blog_list, blog_list } from "redux/actions/blog";
+import Moment from 'react-moment';
+function Home({
+    get_blog_list,
+    blog_list,
 
-function Home() {
+}) {
+
+    useEffect(() => {
+        get_blog_list()
+    }, [get_blog_list])
 
     return (
         <FullWidthLayout>
@@ -55,45 +66,72 @@ function Home() {
                         <h1 class="text-3xl font-semibold text-gray-800 capitalize lg:text-4xl dark:text-white font-text">Desde el blog</h1>
 
                         <p class="max-w-lg mx-auto mt-4 text-gray-500">
-                            Los últimos artículos agregados al blog.                            quia tempore delect
+                            Los últimos artículos agregados al blog.
                         </p>
                     </div>
 
-                    <div class="grid grid-cols-1 gap-8 mt-8 lg:grid-cols-2">
-                        <div>
-                            <img class="relative z-10 object-cover w-full rounded-md h-96" src="https://images.unsplash.com/photo-1644018335954-ab54c83e007f?ixlib=rb-1.2.1&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=1470&q=80" alt="" />
+                    {blog_list ?
 
-                            <div class="relative z-20 max-w-lg p-6 mx-auto -mt-20 bg-white rounded-md shadow dark:bg-gray-900">
-                                <Link to="#" class="font-semibold text-gray-800 hover:underline dark:text-white md:text-xl">
-                                    All the features you want to know
-                                </Link>
+                        <div class="grid grid-cols-1 gap-8 mt-8 lg:grid-cols-2">
+                            <div>
 
-                                <p class="mt-3 text-sm text-gray-500 dark:text-gray-300 md:text-sm">
-                                    Lorem ipsum dolor sit amet consectetur adipisicing elit. Iure veritatis sint autem nesciunt,
-                                    laudantium quia tempore delect
-                                </p>
+                                <img class="relative z-10 object-cover w-full rounded-md h-96" src={blog_list[0].thumbnail} alt={blog_list[0].title} />
 
-                                <p class="mt-3 text-sm text-blue-500">21 October 2019</p>
+                                <div class="relative z-20 max-w-lg p-6 mx-auto -mt-20 bg-white rounded-md shadow dark:bg-gray-900">
+
+                                    <Link to="/blog" class="font-semibold text-gray-800 hover:underline dark:text-white md:text-xl">
+                                        {blog_list[0].title}
+                                    </Link>
+
+                                    <p class="mt-3 text-sm text-gray-500 dark:text-gray-300 md:text-sm">
+                                        {blog_list[0].excerpt}
+                                    </p>
+
+                                    <p class="mt-3 text-sm text-blue-500">
+                                        Publicado:
+                                        <Moment format="DD/MM/YYYY">
+                                            {blog_list[0].published}
+                                        </Moment>
+                                    </p>
+                                    <Link to={`/blog/post/${blog_list[0].slug}`} className="block mt-2 self-end">
+                                        <button type="button" class="text-white bg-gradient-to-br from-purple-600 to-blue-500 hover:bg-gradient-to-bl focus:ring-4 focus:outline-none focus:ring-blue-300 dark:focus:ring-blue-800 font-medium rounded-lg text-sm px-5 py-2.5 text-center mr-2 mb-2">Ver Post</button>
+                                    </Link>
+                                </div>
+                            </div>
+
+                            <div>
+                                <img class="relative z-10 object-cover w-full rounded-md h-96" src={blog_list[1].thumbnail} alt={blog_list[1].title} />
+
+                                <div class="relative z-20 max-w-lg p-6 mx-auto -mt-20 bg-white rounded-md shadow dark:bg-gray-900">
+                                    <Link to="blog" class="font-semibold text-gray-800 hover:underline dark:text-white md:text-xl">
+                                        {blog_list[1].title}
+                                    </Link>
+
+                                    <p class="mt-3 text-sm text-gray-500 dark:text-gray-300 md:text-sm">
+                                        {blog_list[1].excerpt}
+                                    </p>
+                                    <p class="mt-3 text-sm text-blue-500">
+                                        Publicado:
+                                        <Moment format="DD/MM/YYYY">
+                                            {blog_list[1].published}
+                                        </Moment>
+                                    </p>
+                                    <Link to={`/blog/post/${blog_list[1].slug}`} className="block mt-2 self-end">
+                                        <button type="button" class="text-white bg-gradient-to-br from-purple-600 to-blue-500 hover:bg-gradient-to-bl focus:ring-4 focus:outline-none focus:ring-blue-300 dark:focus:ring-blue-800 font-medium rounded-lg text-sm px-5 py-2.5 text-center mr-2 mb-2">Ver Post</button>
+                                    </Link>
+                                </div>
                             </div>
                         </div>
 
-                        <div>
-                            <img class="relative z-10 object-cover w-full rounded-md h-96" src="https://images.unsplash.com/photo-1497032628192-86f99bcd76bc?ixlib=rb-1.2.1&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=1470&q=80" alt="" />
 
-                            <div class="relative z-20 max-w-lg p-6 mx-auto -mt-20 bg-white rounded-md shadow dark:bg-gray-900">
-                                <Link to="#" class="font-semibold text-gray-800 hover:underline dark:text-white md:text-xl">
-                                    How to use sticky note for problem solving
-                                </Link>
+                        :
 
-                                <p class="mt-3 text-sm text-gray-500 dark:text-gray-300 md:text-sm">
-                                    Lorem ipsum dolor sit amet consectetur adipisicing elit. Iure veritatis sint autem nesciunt,
-                                    laudantium quia tempore delect
-                                </p>
+                        <LoadingCard />
 
-                                <p class="mt-3 text-sm text-blue-500">20 October 2019</p>
-                            </div>
-                        </div>
-                    </div>
+
+
+                    }
+
                 </div>
             </section>
 
@@ -102,7 +140,11 @@ function Home() {
 }
 
 const mapStateToProps = state => ({
+    blog_list: state.blog.blog_list,
+
 })
 
 export default connect(mapStateToProps, {
+    get_blog_list
+
 })(Home)
